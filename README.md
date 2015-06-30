@@ -17,11 +17,11 @@ Example
 Example
 -------
 
-    Import lxmlmate first:
+    Import lxmlmate first::
 
     >>> from lxmlmate import ObjectifiedElementProxy
 	
-    To create a brand new xml:
+    To create a brand new xml::
 
     >>> p = ObjectifiedElmentProxy( rootag='Person' )
     >>> p.name = 'peter'
