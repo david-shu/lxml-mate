@@ -2,11 +2,11 @@
 What is lxml-mate?
 =================
 
-The simplest Object-XML mapper for Python, yet it's powerful.
+The simplest XML-Object mapper for Python powered by lxml. It’s powerful.
 
-No class definitions are needed to define the expected structure of your XML document.
+No class definitions are needed to define structure of your XML document.
 
-You can handle xml in very pythonic way.
+You can create a brand new xml, or create from string, xml document and handle it in very pythonic way.
 
 See source code for more documents.
 
@@ -14,11 +14,14 @@ See source code for more documents.
 Example
 -------
 
-	Import lxmlmate first:
+Example
+-------
 
-	>>> from lxmlmate import ObjectifiedElementProxy
+    Import lxmlmate first:
+
+    >>> from lxmlmate import ObjectifiedElementProxy
 	
-	To create a brand new xml:
+    To create a brand new xml:
 
     >>> p = ObjectifiedElmentProxy( rootag='Person' )
     >>> p.name = 'peter'
@@ -86,43 +89,48 @@ Example
     
     >>> r.insert( 'person', attrib={ 'height' : "185cm" } )
 	
-	To modify a tag's attrib:
+    To modify a tag's attrib:
 	
-	>>> r.person[0].attrib['height'] = "170cm" 
+    >>> r.person[0].attrib['height'] = "170cm" 
     
-	You can use lxml.ObjectifiedElement's methods directly like this:
+    You can use lxml.ObjectifiedElement's methods directly like this:
 	
-	>>> r.addattr( 'kkk','vvv' )
+    >>> r.addattr( 'kkk','vvv' )
 	
-	To modify tag:
+    To modify tag:
 	
-	>>> r.person[-1].tag = 'person_new'
-	>>> print r.person[-1]
-	<person_new> 	    
+    >>> r.person[-1].tag = 'person_new'
+    >>> print r.person[-1]
+    <person_new> 	    
         <name>david</name>
         <age>16</age>
-	</person_new>
+    </person_new>
 	
-	To modify tag's value:
+    To modify tag's value:
 	
-	>>> r.person[-1].age = 20
+    >>> r.person[-1].age = 20
 	
     To clean empty node:
     
     >>> r.clean()
     
-	To dump to xml document:
+    To dump to xml document:
 	
-	>>> r.dump( 'person.xml' ) 
+    >>> r.dump( 'person.xml' ) 
     
-
+    To load from xml document:
+    
+    >>> r = ObjectifiedElementProxy( xmlFile='person.xml' )
+    
+    
 Dependencies
 ------------
 lxml https://github.com/lxml/lxml/
 
+
 Installion
 ----------
-	>>> pip install lxml-lite
+	>>> pip install lxml-mate
 
 
 
