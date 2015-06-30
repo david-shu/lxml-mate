@@ -14,9 +14,6 @@ See source code for more documents.
 Example
 -------
 
-Example
--------
-
     Import lxmlmate first:
 
     >>> from lxmlmate import ObjectifiedElementProxy
