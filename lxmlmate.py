@@ -7,7 +7,7 @@ lxml mate.
 
 __ver_major__ = 0
 __ver_minor__ = 5
-__ver_patch__ = 0
+__ver_patch__ = 2
 __ver_sub__ = ""
 __version__ = "%d.%d.%d%s" % (__ver_major__,__ver_minor__,__ver_patch__,__ver_sub__) 
 
@@ -63,18 +63,29 @@ class ObjectifiedElementProxy( object ):
     -----------------
     The following keywords are used as methods or attributes' names.
     
-    pyval : returns the python value carried by leaf tag. read-only.
-    text : returns leaf tag's text content. read-only.
-    obj : returns ObjectifiedElement object referenced by this class instance. read-only.
-    tag : returns tag names. can be modified by . way such as *.tag='newTagName'. readable and writable.
-    attrib: returns tag attributes dict. readable and writeable.
-    parent : returns parent node. read-only.
-    children : returns all children's list. read-only.
-    len : returns the number of children.
-    insert : insert a child node at the specified position.
-    remove : remove a child node at the specified position.
-    index : returns the position of the specified object.
-    swap : swap two nodes' position.
+    **pyval** : returns the python value carried by leaf tag. read-only.
+    
+    **text** : returns leaf tag's text content. read-only.
+    
+    **obj** : returns ObjectifiedElement object referenced by this class instance. read-only.
+    
+    **tag** : returns tag names. can be modified by . way such as \*.tag='newTagName'. readable and writable.
+    
+    **attrib** : returns tag attributes dict. readable and writeable.
+    
+    **parent** : returns parent node. read-only.
+    
+    **children** : returns all children's list. read-only.
+    
+    **len** : returns the number of children.
+    
+    **insert** : insert a child node at the specified position.
+    
+    **remove** : remove a child node at the specified position.
+    
+    **index** : returns the position of the specified object.
+    
+    **swap** : swap two nodes' position.
 
     Examples
     --------
@@ -206,19 +217,19 @@ class ObjectifiedElementProxy( object ):
 
         See Also
         --------
-        insert( tag, i, attrib, nsmap, **kwargs ).
+        insert
+        
         note the difference between the two methods' return values.
 
         Examples
         --------
-        p=XMLObject( rootag='Person' ).root
-        p( 'name', pyval='jack' )('age', pyval=13 )
-        print p
+        >>> p=ObjectifiedElementProxy( rootag='Person' )
+        >>> p( 'name', pyval='jack' )('age', pyval=13 )
+        >>> print( p )
         <Person>
-            <name py:pytype="str">jack</name>
-            <age py:pytype="int">13</age>
-        </Person>
-        
+        	<name py:pytype="str">jack</name>
+        	<age py:pytype="int">13</age>
+        </Person>        
         '''
 
         self.insert( tag, None, attrib, nsmap, **kwargs )
@@ -316,7 +327,7 @@ class ObjectifiedElementProxy( object ):
             if i is integer : position of the new tag. else append to the end.
         attrib,nsmap,kwargs : optional
             attribs for the new tag. see also objectify.Element() or SubElement().
-
+		
         '''
         
         v = objectify.SubElement( self._____o____, e, attrib=attrib, nsmap=nsmap, **kwargs )
@@ -341,15 +352,27 @@ class ObjectifiedElementProxy( object ):
 
 
     def remove( self, i ):
-        u'''remove the child node at the specified position.
+        u'''remove the child node.
 
         Arguments
         ---------
-        i : int
-            position of the child node which will be removed.
+        i : int or ObjectifiedElement or ObjectifiedElementProxy or list
+            position of the child node or Element which will be removed.
+            
         '''
         
-        return self.obj.remove( self.children[i].obj )
+        if isinstance( i, list ):
+            for k in i:
+                self.remove( k )
+                
+        elif isinstance( i, int ):
+            return self.obj.remove( self.children[i].obj )
+        
+        elif isinstance( i, objectify.ObjectifiedElement ):
+            return self.obj.remove( i )
+        
+        elif isinstance( i, ObjectifiedElementProxy ):
+            return self.obj.remove( i.obj )
         
 
     def index( self, o ):
@@ -366,7 +389,42 @@ class ObjectifiedElementProxy( object ):
         '''
 
         return self._____o____.index( o.obj )
-    
+
+
+    def xpath( self, path ):
+        u'''find elements list in accordance with path.
+
+        Arguments
+        ---------
+        path : str
+            please refer to lxml.objectify.ObjectifiedElement.xpath.
+
+        Returns
+        -------
+        list
+            a list of ObjectifiedElementProxy instance.
+
+
+        Xpath grammer review
+        --------------------
+
+        ==========  ===========
+        expression  description
+        ==========  ===========   
+        nodename    to select all children of the node name
+        /           select from root node.    
+        //          select from current node
+        .           select the current code.   
+        ..          select the parent node of the current node.
+        @           select attrib.
+        []          condition
+        text()      tag text
+        *           arbitrary node
+        ==========  ============
+        '''
+        
+        return [ ObjectifiedElementProxy(k) for k in self._____o____.xpath( path ) ]
+        
         
     @property
     def children( self, **kwargs ):
