@@ -17,6 +17,7 @@ Features
 Intercept AttributeError when access a non-existent tag in order to access more easily.
 
 For exmaple:
+
 	>>> s = '''
 	...	<root>
 	...		<person height='180cm'>
@@ -92,7 +93,7 @@ Usage
 	>>> rm.person.attrib[ 'height' ] = '180cm'
 	
 	
-#. append::
+#. append
 
 	to append xml snippet like:
 	
@@ -125,7 +126,7 @@ Usage
 	>>> rm.insert( 'person', i=None )( 'name', 'joe' )( 'age', 25 )
 
 	
-#. select::
+#. select
 	 
 	*lxml
 	
