@@ -33,13 +33,13 @@ For exmaple:
 	when we access the second person's age, lxml.objectify.ObjectifiedElement will raise 
 	an AttributeError. lxml-mate will create an null node instead of raising an exception.
 	
-	* lxml:
+	*lxml:
 	
 	>>> r = objectify.fromstring( s )
 	>>> ages = [ ( p.name, p.age ) for p in r.person ] #AttributeError be raised.
 	>>> r.person[0].else.mother = 'jerry' #AttributeError be raised.
 	
-	* lxml-mate:
+	*lxml-mate:
 	
 	>>> r = ObjectifiedElementProxy( xmlstr = s )
 	>>> ages = [ ( p.name.pyval, p.age.pyval ) for p in r.person[:] ] #dose work
