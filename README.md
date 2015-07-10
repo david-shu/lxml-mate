@@ -51,7 +51,7 @@ Usage
 
 #. create
 
-	to create a new xml like::
+to create a new xml like::
 
 	<root>
 		<person height='180cm'>
@@ -60,7 +60,7 @@ Usage
 		</person>
 	</root>
 	
-	*lxml*
+**lxml**:
 
 	>>> from lxml import objectify, etree
 	>>> r = objectify.Element('root')
@@ -70,22 +70,22 @@ Usage
 	>>> age = objectify.SubElement( person, 'age' )
 	>>> person.age = 18
 	
-	or use E-factory
+or use E-factory
 	
 	>>> E = objectify.E
 	>>> E.root( E.person( E.name('jack'), E.age(18), height='180cm' ) )
 	
-	*lxml-mate*
+**lxml-mate**:
 
 	>>> from lxmlmate import ObjectifiedElementProxy
 	>>> rm = ObjectifiedElementProxy( rootag='root' )
 	>>> rm.append( E.person( E.name('jack'), E.age(18), height='180cm' ) )
 	
-	or
+or
 	
 	>>> rm = ObjectifiedElementProxy( objectifiedElement = E.root( E.person( E.name('jack'), E.age(18), height='180cm', height='180cm' ) ) )
 	
-	or
+or
 	
 	>>> rm = ObjectifiedElementProxy( rootag='root' )
 	>>> rm.person.name = 'jack'
@@ -95,7 +95,7 @@ Usage
 	
 #. append
 
-	to append xml snippet like:
+to append xml snippet like:
 	
 	<person>
 		<name>peter</name>
@@ -106,21 +106,21 @@ Usage
 		<age>25</age>
 	</person>
 	
-	*lxml*
+**lxml**:
 	
 	>>> r.append( E.person( E.name( 'peter' ), E.age( 45 ) ),
 	...           E.person( E.name( 'joe' ), E.age( 25 ) )
 	...          )
 	>>>
 	
-	*lxml-mate*
+**lxml-mate**:
 		
 	>>> rm.append( E.person( E.name( 'peter' ), E.age( 45 ) ),
 	...            E.person( E.name( 'joe' ), E.age( 25 ) )
 	...           )
 	>>>
 
-	or
+or
 	 
 	>>> rm.insert( 'person', i=None )( 'name', 'peter' )( 'age', 45 )
 	>>> rm.insert( 'person', i=None )( 'name', 'joe' )( 'age', 25 )
@@ -128,17 +128,17 @@ Usage
 	
 #. select
 	 
-	*lxml*
+**lxml**:
 	
-	to select the last person ( named joe )
+to select the last person ( named joe )
 	
 	>>> r.person[-1] #return an ObjectifiedElement instance.
 	
-	to find persons named joe::
+to find persons named joe::
 
 	>>> r.xpath( '//person[name="joe"]' )  # return ObjectifiedElement instances list
 
-	*lxml-mate*
+**lxml-mate**:
 	
 	>>> rm.person[-1]  #return an ObjectifiedElementProxy instance.
 	>>> rm.xpath( '//person[name="joe"]' )  # return ObjectifiedElementProxy objects list
@@ -146,25 +146,25 @@ Usage
 		
 #. remove
 
-	to remove all persons named joe:
+to remove all persons named joe:
 	
-	*lxml*
+**lxml**:
 	
 	>>> p = r.xpath( '//person[name="joe"]' )
 	>>> for k in p: r.remove( k )
 	
-	*lxml-mate*
+**lxml-mate**:
 	
 	>>> pm = rm.xpath( '//person[name="joe"]' )
 	>>> rm.remove( pm )
 	
-	or 
+or 
 	
 	>>> rm.remove( [ p for p in rm.person[:] if p.name.pyval == 'joe' ] )
 	
 	to remove the first person: 
 	
-	*lxml
+**lxml**:
 	
 	>>> p = r.person[0]
 	>>> r.remove( p )
@@ -175,72 +175,72 @@ Usage
 	
 #. dump to file
 
-	*lxml*
+**lxml**:
 	
 	>>> f = open( 'person.xml', 'w' )
 	>>> s = etree.tostring( r )
 	>>> f.write( s )
 	>>> f.close()
 	
-	*lxml-mate*
+**lxml-mate**:
 	
 	>>> rm.dump( 'person.xml' )
 	
 	
 #. load from file
 
-	*lxml*
+**lxml**:
 	
 	>>> r = objectify.XML( 'person.xml' )
 	
-	*lxml-mate*
+**lxml-mate**:
 	
 	>>> rm = ObjectifiedElementProxy( xmlFile = 'person.xml' ) 
 
 
 #. create a brand new xml
 	
-	*lxml*
+**lxml**:
 	
 	>>> r = objectify.Element('root')
 	
-	*lxml-mate*
+**lxml-mate**:
 	
 	>>> rm = ObjectifiedElementProxy( rootag='root' )
 
     
 #. Else
 
-	to access a tag:
+to access a tag:
 	
 	>>> rm.person[0]
 	>>> rm[ 'person' ][0]
 	>>> rm.person
 	>>> rm.person[ 'name' ]
 	
-	to modify a tag's value:
+to modify a tag's value:
 	
 	>>> rm.person.age = 23
 	
-	to get a tag's pyval:
+to get a tag's pyval:
 	
 	>>> rm.person.age.pyval
 
-	to modify a tag's attrib:
+to modify a tag's attrib:
     
-        >>> rm.person[0].attrib['height'] = "170cm" 
+    >>> rm.person[0].attrib['height'] = "170cm" 
     
-	to modify tag:
+to modify tag:
     
-        >>> rm.person[-1].tag = 'people'
+    >>> rm.person[-1].tag = 'people'
     
-        to clean empty node ( no attributes & no children ):
+to clean empty node ( no attributes & no children ):
     
-        >>> rm.clean()
+    >>> rm.clean()
     
-        You can use lxml.objectify.ObjectifiedElement's methods directly like this:
+You can use lxml.objectify.ObjectifiedElement's methods directly like this:
     
-        >>> rm.addattr( 'kkk','vvv' )
+    >>> rm.addattr( 'kkk','vvv' )
     
 
 
