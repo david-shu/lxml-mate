@@ -33,13 +33,13 @@ For exmaple:
 	when we access the second person's age, lxml.objectify.ObjectifiedElement will raise 
 	an AttributeError. lxml-mate will create an null node instead of raising an exception.
 	
-	*lxml:
+	*lxml*
 	
 	>>> r = objectify.fromstring( s )
 	>>> ages = [ ( p.name, p.age ) for p in r.person ] #AttributeError be raised.
 	>>> r.person[0].else.mother = 'jerry' #AttributeError be raised.
 	
-	*lxml-mate:
+	*lxml-mate*
 	
 	>>> r = ObjectifiedElementProxy( xmlstr = s )
 	>>> ages = [ ( p.name.pyval, p.age.pyval ) for p in r.person[:] ] #dose work
@@ -60,7 +60,7 @@ Usage
 		</person>
 	</root>
 	
-	*lxml:
+	*lxml*
 
 	>>> from lxml import objectify, etree
 	>>> r = objectify.Element('root')
@@ -70,12 +70,12 @@ Usage
 	>>> age = objectify.SubElement( person, 'age' )
 	>>> person.age = 18
 	
-	or use E-factory:
+	or use E-factory
 	
 	>>> E = objectify.E
 	>>> E.root( E.person( E.name('jack'), E.age(18), height='180cm' ) )
 	
-	*lxml-mate:
+	*lxml-mate*
 
 	>>> from lxmlmate import ObjectifiedElementProxy
 	>>> rm = ObjectifiedElementProxy( rootag='root' )
@@ -106,14 +106,14 @@ Usage
 		<age>25</age>
 	</person>
 	
-	*lxml:
+	*lxml*
 	
 	>>> r.append( E.person( E.name( 'peter' ), E.age( 45 ) ),
 	...           E.person( E.name( 'joe' ), E.age( 25 ) )
 	...          )
 	>>>
 	
-	*lxml-mate:
+	*lxml-mate*
 		
 	>>> rm.append( E.person( E.name( 'peter' ), E.age( 45 ) ),
 	...            E.person( E.name( 'joe' ), E.age( 25 ) )
@@ -128,7 +128,7 @@ Usage
 	
 #. select
 	 
-	*lxml
+	*lxml*
 	
 	to select the last person ( named joe )
 	
@@ -138,7 +138,7 @@ Usage
 
 	>>> r.xpath( '//person[name="joe"]' )  # return ObjectifiedElement instances list
 
-	*lxml-mate
+	*lxml-mate*
 	
 	>>> rm.person[-1]  #return an ObjectifiedElementProxy instance.
 	>>> rm.xpath( '//person[name="joe"]' )  # return ObjectifiedElementProxy objects list
@@ -148,12 +148,12 @@ Usage
 
 	to remove all persons named joe:
 	
-	*lxml:
+	*lxml*
 	
 	>>> p = r.xpath( '//person[name="joe"]' )
 	>>> for k in p: r.remove( k )
 	
-	*lxml-mate:
+	*lxml-mate*
 	
 	>>> pm = rm.xpath( '//person[name="joe"]' )
 	>>> rm.remove( pm )
@@ -175,36 +175,36 @@ Usage
 	
 #. dump to file
 
-	*lxml:
+	*lxml*
 	
 	>>> f = open( 'person.xml', 'w' )
 	>>> s = etree.tostring( r )
 	>>> f.write( s )
 	>>> f.close()
 	
-	*lxml-mate:
+	*lxml-mate*
 	
 	>>> rm.dump( 'person.xml' )
 	
 	
 #. load from file
 
-	*lxml:
+	*lxml*
 	
 	>>> r = objectify.XML( 'person.xml' )
 	
-	*lxml-mate:
+	*lxml-mate*
 	
 	>>> rm = ObjectifiedElementProxy( xmlFile = 'person.xml' ) 
 
 
 #. create a brand new xml
 	
-	*lxml:
+	*lxml*
 	
 	>>> r = objectify.Element('root')
 	
-	*lxml-mate:
+	*lxml-mate*
 	
 	>>> rm = ObjectifiedElementProxy( rootag='root' )
 
@@ -228,30 +228,30 @@ Usage
 
 	to modify a tag's attrib:
     
-    >>> rm.person[0].attrib['height'] = "170cm" 
+        >>> rm.person[0].attrib['height'] = "170cm" 
     
 	to modify tag:
     
-    >>> rm.person[-1].tag = 'people'
+        >>> rm.person[-1].tag = 'people'
     
-    to clean empty node ( no attributes & no children ):
+        to clean empty node ( no attributes & no children ):
     
-    >>> rm.clean()
+        >>> rm.clean()
     
-    You can use lxml.objectify.ObjectifiedElement's methods directly like this:
+        You can use lxml.objectify.ObjectifiedElement's methods directly like this:
     
-    >>> rm.addattr( 'kkk','vvv' )
+        >>> rm.addattr( 'kkk','vvv' )
     
 
 
 Dependencies
-------------
+============
 lxml https://github.com/lxml/lxml/
 
 
 
 Installion
-----------
+==========
 	>>> pip install lxml-mate
 	
 	
