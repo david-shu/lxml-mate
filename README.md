@@ -162,7 +162,7 @@ or
 	
 	>>> rm.remove( [ p for p in rm.person[:] if p.name.pyval == 'joe' ] )
 	
-	to remove the first person: 
+to remove the first person: 
 	
 **lxml**:
 	
